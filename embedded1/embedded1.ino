@@ -1,4 +1,3 @@
-void setup() {
   /*define waveform parameters. uint8_t is used to minimise size
     the calculated parameters were:
       a=200uS
@@ -7,30 +6,33 @@ void setup() {
       d=3500uS
       mode=2
   */
-  const uint8_t pulseWidth = 200          //parameter A - width of inital pulse (μS) 
-  const uint8_t pulseWidthIncrement = 50  //incremental increase of pulse width (μS)
-  const uint8_t pulseSpacing = 2100       //parameter B - width of space between pulses (μS)
-  const uint8_t pulsesPerBlock = 21       //parameter C - number of pulses in a block
-  const uint8_t blockSpacing = 3500       //parameter D - width of space between blocks (μS)
+  const int pulseWidth = 200;          //parameter A - width of inital pulse (μS) 
+  const int pulseWidthIncrement = 50;  //incremental increase of pulse width (μS)
+  const int pulseSpacing = 2100;       //parameter B - width of space between pulses (μS)
+  const int pulsesPerBlock = 21;       //parameter C - number of pulses in a block
+  const int blockSpacing = 3500;       //parameter D - width of space between blocks (μS)
   
   //define constants for pin numbers
-  const uint8_t switch1Pin = 5;
-  const uint8_t switch2Pin = 4;
-  const uint8_t signalAPin = 3;
-  const uint8_t signalBPin = 18;
+  const int switch1Pin = 5;
+  const int switch2Pin = 4;
+  const int signalAPin = 3;
+  const int signalBPin = 18;
+
+
+void setup() {
 
   //set the pins for the buttons as inputs and for the signals as outputs
   pinMode(switch1Pin, INPUT);
   pinMode(switch2Pin, INPUT);
-  pinMode(signalAPinPin, OUTPUT);
-  pinMode(signalBPinPin, OUTPUT);
+  pinMode(signalAPin, OUTPUT);
+  pinMode(signalBPin, OUTPUT);
 }
 
 void loop() {
-  if (digitalRead(switch1Pin, HIGH) {
+  if (digitalRead(switch1Pin) == HIGH) {
     sigB;
     
-    if (digitalRead(switch2Pin, HIGH){sigAInverted;}
+    if (digitalRead(switch2Pin) == HIGH){sigAInverted;}
     else {sigA;}
     
     delayMicroseconds(blockSpacing);
