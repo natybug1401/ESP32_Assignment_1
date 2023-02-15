@@ -1,11 +1,9 @@
 void setup() {
-  // put your setup code here, to run once:
-  
   /*define waveform parameters. uint8_t is used to minimise size
     the calculated parameters were:
       a=200uS
       b=2100uS
-      c=21
+      c=22
       d=3500uS
       mode=2
   */
@@ -23,13 +21,42 @@ void setup() {
 
   //set the pins for the buttons as inputs and for the signals as outputs
   pinMode(switch1Pin, INPUT);
-  pinMode(switch1Pin, INPUT);
+  pinMode(switch2Pin, INPUT);
   pinMode(signalAPinPin, OUTPUT);
   pinMode(signalBPinPin, OUTPUT);
-
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  if (digitalRead(switch1Pin, HIGH) {
+    sigB;
+    
+    if (digitalRead(switch2Pin, HIGH){sigAInverted;}
+    else {sigA;}
+    
+    delayMicroseconds(blockSpacing);
+  }
+}
 
+void sigA(){
+  for (uint8_t i=0; i<pulsesPerBlock; i++){
+    digitalWrite(signalAPin, HIGH);
+    delayMicroseconds(pulseWidth+(pulseWidthIncrement*i));
+    digitalWrite(signalAPin, LOW);
+    delayMicroseconds(pulseSpacing);
+  }
+}
+
+void sigAInverted(){
+  for (uint8_t i=pulsesPerBlock; i>0; i--){
+    digitalWrite(signalAPin, HIGH);
+    delayMicroseconds(pulseWidth+(pulseWidthIncrement*i));
+    digitalWrite(signalAPin, LOW);
+    delayMicroseconds(pulseSpacing);
+  }
+}
+
+void sigB(){
+  digitalWrite(signalBPin, HIGH);
+  delayMicroseconds(50);
+  digitalWrite(signalBPin, LOW);
 }
