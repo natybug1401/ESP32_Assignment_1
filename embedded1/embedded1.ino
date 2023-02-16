@@ -6,11 +6,11 @@
       d=3500uS
       mode=2
   */
-  const int pulseWidth = 200;                                 //parameter A - width of inital pulse (μS) 
-  const int pulseWidthIncrement = 50;                         //incremental increase of pulse width (μS)
-  const int pulseSpacing = 2100;                              //parameter B - width of space between pulses (μS)
-  const int pulsesPerBlock = 21;                              //parameter C - number of pulses in a block
-  const int blockSpacing = 3500;                              //parameter D - width of space between blocks (μS)
+  const int pulseWidth = 200;                                                     //parameter A - width of inital pulse (μS) 
+  const int pulseWidthIncrement = 50;                                             //incremental increase of pulse width (μS)
+  const int pulseSpacing = 2100;                                                  //parameter B - width of space between pulses (μS)
+  const int pulsesPerBlock = 21;                                                  //parameter C - number of pulses in a block
+  const int blockSpacing = 3500;                                                  //parameter D - width of space between blocks (μS)
   
   //define constants for pin numbers
   const int switch1Pin = 5;
@@ -28,39 +28,31 @@ void setup() {
 }
 
 void loop() {
-  if (digitalRead(switch1Pin) == HIGH) {                      //if switch 1 is pressed
-    sigB;                                                     //run signal B
-
-    if (digitalRead(switch2Pin) == HIGH){sigAMod;}            //if switch 2 is also pressed, run the modified version of signal A
-    else {sigA;}                                              //if switch 2 is not pressed, run the regular version of signal A
-
-    delayMicroseconds(blockSpacing);                          //wait for a time defined by parameter D, before looping to start a new block of pulses
-    
+  if (digitalRead(switch1Pin) == HIGH) {                                          //if switch 1 is pressed
+    sigB;                                                                         //run signal B
+    sigA(sigitalRead(switch2Pin));                                                //run signal A, with the state of switch 2 passed as an argument  
   }
 }
 
-//method to generate signal A
-void sigA(){
-  for (uint8_t i=0; i<pulsesPerBlock; i++){                   //iterate from 0 up to Parameter C
-    digitalWrite(signalAPin, HIGH);                           //set the signal high
-    delayMicroseconds(pulseWidth+(pulseWidthIncrement*i));    //wait for a time defined by parameter A + parameter B multiplied by the iteration value, as iteration counts up, this will increase the pulse length each iteration
-    digitalWrite(signalAPin, LOW);                            //set the signal low
-    delayMicroseconds(pulseSpacing);                          //wait for a time defined by parameter B
+//method to generate signal A, the modifier argument controls whether the basic or modifed signal is generated
+void sigA(modifier){
+  for (uint8_t i=0; i<pulsesPerBlock; i++){                                       //iterate from 0 up to Parameter C
+    digitalWrite(signalAPin, HIGH);                                               //set the signal high
+    if (modifier == HIGH) {                                                         //if the switch is engaged, modified mode is selected
+      delayMicroseconds(pulseWidth+(pulseWidthIncrement*(pulsesPerBlock-1-i)));   //wait for a time defined by parameter A + parameter B multiplied by the number of remaining pulses
+    }
+    else {                                                                        //if the switch is not engaged, regular mode is selected
+      delayMicroseconds(pulseWidth+(pulseWidthIncrement*i));                      //wait for a time defined by parameter A + parameter B multiplied by the number of prior pulses
+    }
+    digitalWrite(signalAPin, LOW);                                                //set the signal low
+    delayMicroseconds(pulseSpacing);                                              //wait for a time defined by parameter B
   }
+  delayMicroseconds(blockSpacing);                                              //wait for a time defined by parameter D
 }
 
-//method to generate the modified signal A
-void sigAMod(){
-  for (uint8_t i=pulsesPerBlock; i>0; i--){                   //iterate from Parameter C down to 0 
-    digitalWrite(signalAPin, HIGH);                           //set the signal high
-    delayMicroseconds(pulseWidth+(pulseWidthIncrement*i));    //wait for a time defined by parameter A + parameter B multiplied by the iteration value, as iteration counts down, this will decrease the pulse length each iteration
-    digitalWrite(signalAPin, LOW);                            //set the signal low
-    delayMicroseconds(pulseSpacing);                          //wait for a time defined by parameter B
-  }
-}
-
+//method to generate signal B
 void sigB(){
-  digitalWrite(signalBPin, HIGH);                             //set the signal high
-  delayMicroseconds(50);                                      //wait 50 microseconds
-  digitalWrite(signalBPin, LOW);                              //set the signal low
+  digitalWrite(signalBPin, HIGH);                                                 //set the signal high
+  delayMicroseconds(50);                                                          //wait 50 microseconds
+  digitalWrite(signalBPin, LOW);                                                  //set the signal low
 }
