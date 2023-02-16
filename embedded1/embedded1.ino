@@ -11,6 +11,7 @@
   const int pulseSpacing = 600;                                                   //parameter B - width of space between pulses (μS)
   const int pulsesPerBlock = 13;                                                  //parameter C - number of pulses in a block
   const int blockSpacing = 3500;                                                  //parameter D - width of space between blocks (μS)
+  const int sigBWidth = 50;                                                       //signal B pulse length (μS)
 
   //define testing multiplier, set to 1 for oscilloscope, set to 1000 for LEDs
   const int testingMultiplier = 1;                                             
@@ -73,7 +74,7 @@ void sigA(int modifier){
 void sigB(){
   
   digitalWrite(signalBPin, HIGH);                                                                     //set the signal high
-  delayMicroseconds((50)*testingMultiplier);                                                          //wait 50 microseconds
+  delayMicroseconds((sigBWidth)*testingMultiplier);                                                   //wait the length of the signal B pulse
   digitalWrite(signalBPin, LOW);                                                                      //set the signal low
   
 }
