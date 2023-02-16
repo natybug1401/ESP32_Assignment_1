@@ -13,7 +13,7 @@
   const int blockSpacing = 3500;                                                  //parameter D - width of space between blocks (μS)
 
   //define testing multiplier, set to 1 for oscilloscope, set to 1000 for LEDs
-  const int testingMultiplier = 1000;                                             
+  const int testingMultiplier = 1;                                             
   
   //define constants for I/O pin numbers
   const int switch1Pin = 5;
@@ -35,7 +35,7 @@ void setup() {
 //method that continuously loops after setup() has ran. Used to run the signal generation methods when required
 void loop() {
 
-  if (digitalRead(switch1Pin) == HIGH)                                                                //if switch 1 is pressed
+  if (digitalRead(switch1Pin) == LOW)                                                                //if switch 1 is not pressed
   { 
     sigB();                                                                                           //run signal B
     sigA(digitalRead(switch2Pin));                                                                    //run signal A, with the state of switch 2 passed as an argument  
@@ -46,7 +46,7 @@ void loop() {
 //method to generate signal A, the modifier argument controls whether the basic or modifed signal is generated
 void sigA(int modifier){
   
-  for (uint8_t i=0; i<pulsesPerBlock; i++)                                                            //iterate from 0 to Parameter C
+  for (int i=0; i<pulsesPerBlock; i++)                                                            //iterate from 0 to Parameter C
   {
     
     digitalWrite(signalAPin, HIGH);                                                                   //set the signal high
@@ -55,7 +55,6 @@ void sigA(int modifier){
     {
       delayMicroseconds((pulseWidth+(pulseWidthIncrement*(pulsesPerBlock-1-i)))*testingMultiplier);   //wait for a time defined by parameter A + parameter B * no. of remaining pulses
     }
-    
     else                                                                                              //if the switch is not engaged, regular mode is selected
     { 
       delayMicroseconds((pulseWidth+(pulseWidthIncrement*i))*testingMultiplier);                      //wait for a time defined by parameter A + parameter B * no. of prior pulses
