@@ -6,12 +6,12 @@
       d=3500uS
       mode=2
   */
-  const int pulseWidth = 200;                                                     //parameter A - width of inital pulse (μS) 
-  const int pulseWidthIncrement = 50;                                             //incremental increase of pulse width (μS)
-  const int pulseSpacing = 600;                                                   //parameter B - width of space between pulses (μS)
-  const int pulsesPerBlock = 13;                                                  //parameter C - number of pulses in a block
-  const int blockSpacing = 3500;                                                  //parameter D - width of space between blocks (μS)
-  const int sigBWidth = 50;                                                       //signal B pulse length (μS)
+  const int pulseWidth = 200;                                                                         //parameter A - width of inital pulse (μS) 
+  const int pulseWidthIncrement = 50;                                                                 //incremental increase of pulse width (μS)
+  const int pulseSpacing = 600;                                                                       //parameter B - width of space between pulses (μS)
+  const int pulsesPerBlock = 13;                                                                      //parameter C - number of pulses in a block
+  const int blockSpacing = 3500;                                                                      //parameter D - width of space between blocks (μS)
+  const int sigBWidth = 50;                                                                           //signal B pulse length (μS)
 
   //define testing multiplier, set to 1 for oscilloscope, set to 1000 for LEDs
   const int testingMultiplier = 1;                                             
@@ -21,6 +21,7 @@
   const int switch2Pin = 4;
   const int signalAPin = 3;
   const int signalBPin = 18;
+
 
 //method ran at start of program. Used to set the mode of I/O pins
 void setup() {
@@ -33,10 +34,11 @@ void setup() {
   
 }
 
+
 //method that continuously loops after setup() has ran. Used to run the signal generation methods when required
 void loop() {
 
-  if (digitalRead(switch1Pin) == LOW)                                                                //if switch 1 is not pressed
+  if (digitalRead(switch1Pin) == LOW)                                                                 //if switch 1 is not pressed
   { 
     sigB();                                                                                           //run signal B
     sigA(digitalRead(switch2Pin));                                                                    //run signal A, with the state of switch 2 passed as an argument  
@@ -44,10 +46,11 @@ void loop() {
   
 }
 
+
 //method to generate signal A, the modifier argument controls whether the basic or modifed signal is generated
 void sigA(int modifier){
   
-  for (int i=0; i<pulsesPerBlock; i++)                                                            //iterate from 0 to Parameter C
+  for (int i=0; i<pulsesPerBlock; i++)                                                                //iterate from 0 to Parameter C
   {
     
     digitalWrite(signalAPin, HIGH);                                                                   //set the signal high
@@ -69,6 +72,7 @@ void sigA(int modifier){
   delayMicroseconds((blockSpacing)*testingMultiplier);                                                //at the end of each block of pulses, wait for a time defined by parameter D
   
 }
+
 
 //method to generate signal B
 void sigB(){
